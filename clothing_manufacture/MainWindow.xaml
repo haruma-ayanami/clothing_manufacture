@@ -1,0 +1,89 @@
+<Window x:Class="clothing_manufacture.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="clothing_manufacture"
+        Height="820"
+        Width="1320"
+        MinHeight="720"
+        MinWidth="1120"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource AppBackgroundBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="286" MinWidth="250"/>
+            <ColumnDefinition Width="8"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="{StaticResource SidebarBrush}" Padding="18">
+            <DockPanel>
+                <Border DockPanel.Dock="Bottom" Padding="0 12 0 0">
+                    <TextBlock Text="SQL Server / SSMS • EF Core • WPF"
+                               Foreground="#AAB7CF"
+                               FontSize="12"
+                               TextWrapping="Wrap"/>
+                </Border>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <TextBlock Text="clothing" Foreground="White" FontSize="26" FontWeight="Bold"/>
+                        <TextBlock Text="manufacture" Foreground="#B8C2D6" FontSize="18" Margin="0 0 0 22"/>
+
+                        <Button Content="Главная" Style="{StaticResource MenuButtonStyle}" Click="DashboardButton_Click"/>
+
+                        <TextBlock Text="ПЕРСОНАЛ" Style="{StaticResource MenuSectionStyle}"/>
+                        <Button Content="Люди" Style="{StaticResource MenuButtonStyle}" Click="PeopleButton_Click"/>
+                        <Button Content="Должности" Style="{StaticResource MenuButtonStyle}" Click="PositionsButton_Click"/>
+                        <Button Content="Сотрудники" Style="{StaticResource MenuButtonStyle}" Click="EmployeesButton_Click"/>
+
+                        <TextBlock Text="ПРОЦЕССЫ" Style="{StaticResource MenuSectionStyle}"/>
+                        <Button Content="Процессы" Style="{StaticResource MenuButtonStyle}" Click="ProductionProcessesButton_Click"/>
+                        <Button Content="Этапы процесса" Style="{StaticResource MenuButtonStyle}" Click="ProcessStagesButton_Click"/>
+                        <Button Content="Этапы и должности" Style="{StaticResource MenuButtonStyle}" Click="StagePositionsButton_Click"/>
+
+                        <TextBlock Text="СПРАВОЧНИКИ" Style="{StaticResource MenuSectionStyle}"/>
+                        <Button Content="Классификаторы" Style="{StaticResource MenuButtonStyle}" Click="ClassifiersButton_Click"/>
+                        <Button Content="Клиенты" Style="{StaticResource MenuButtonStyle}" Click="ClientsButton_Click"/>
+                        <Button Content="Материалы" Style="{StaticResource MenuButtonStyle}" Click="MaterialsButton_Click"/>
+
+                        <TextBlock Text="АССОРТИМЕНТ" Style="{StaticResource MenuSectionStyle}"/>
+                        <Button Content="Ассортиментные планы" Style="{StaticResource MenuButtonStyle}" Click="AssortmentPlansButton_Click"/>
+                        <Button Content="Коллекции" Style="{StaticResource MenuButtonStyle}" Click="CollectionsButton_Click"/>
+                        <Button Content="Модели" Style="{StaticResource MenuButtonStyle}" Click="ClothingModelsButton_Click"/>
+                        <Button Content="Варианты моделей" Style="{StaticResource MenuButtonStyle}" Click="ModelVariantsButton_Click"/>
+                        <Button Content="Материалы модели" Style="{StaticResource MenuButtonStyle}" Click="ModelMaterialsButton_Click"/>
+                        <Button Content="Лекала" Style="{StaticResource MenuButtonStyle}" Click="PatternsButton_Click"/>
+                        <Button Content="Образцы" Style="{StaticResource MenuButtonStyle}" Click="SamplesButton_Click"/>
+
+                        <TextBlock Text="ЗАКАЗЫ" Style="{StaticResource MenuSectionStyle}"/>
+                        <Button Content="Заказы клиентов" Style="{StaticResource MenuButtonStyle}" Click="CustomerOrdersButton_Click"/>
+                        <Button Content="Позиции заказов" Style="{StaticResource MenuButtonStyle}" Click="OrderItemsButton_Click"/>
+
+                        <TextBlock Text="ПРОИЗВОДСТВО" Style="{StaticResource MenuSectionStyle}"/>
+                        <Button Content="Производственные задания" Style="{StaticResource MenuButtonStyle}" Click="ProductionTasksButton_Click"/>
+                        <Button Content="Производственные партии" Style="{StaticResource MenuButtonStyle}" Click="ProductionBatchesButton_Click"/>
+
+                        <TextBlock Text="СКЛАД" Style="{StaticResource MenuSectionStyle}"/>
+                        <Button Content="Склады" Style="{StaticResource MenuButtonStyle}" Click="WarehousesButton_Click"/>
+                        <Button Content="Складские ячейки" Style="{StaticResource MenuButtonStyle}" Click="WarehouseCellsButton_Click"/>
+                        <Button Content="Складские остатки" Style="{StaticResource MenuButtonStyle}" Click="WarehouseStocksButton_Click"/>
+
+                        <TextBlock Text="КАЧЕСТВО И ОПЕРАЦИИ" Style="{StaticResource MenuSectionStyle}"/>
+                        <Button Content="Контроль качества" Style="{StaticResource MenuButtonStyle}" Click="QualityControlsButton_Click"/>
+                        <Button Content="Операции товара" Style="{StaticResource MenuButtonStyle}" Click="ProductOperationsButton_Click"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+
+        <GridSplitter Grid.Column="1"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      Background="#CDD6E4"/>
+
+        <Frame x:Name="MainContentFrame"
+               Grid.Column="2"
+               NavigationUIVisibility="Hidden"/>
+    </Grid>
+</Window>

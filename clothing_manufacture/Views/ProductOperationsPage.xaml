@@ -1,0 +1,227 @@
+﻿<Page x:Class="clothing_manufacture.Views.ProductOperationsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Операции товара"
+      Background="{StaticResource AppBackgroundBrush}">
+
+    <Page.Resources>
+        <ResourceDictionary Source="/Resources/AppStyles.xaml"/>
+    </Page.Resources>
+
+    <Grid Style="{StaticResource PageRootGridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Style="{StaticResource HeaderCardStyle}">
+            <DockPanel LastChildFill="True">
+                <Button DockPanel.Dock="Right"
+                        Content="Обновить"
+                        Command="{Binding LoadCommand}"
+                        Style="{StaticResource GhostButtonStyle}"
+                        MinWidth="110"
+                        Margin="12,0,0,0"/>
+
+                <StackPanel>
+                    <TextBlock Text="Операции товара" Style="{StaticResource PageTitleStyle}"/>
+                    <TextBlock Text="Поступления, перемещения, отгрузки, возвраты и списания." Style="{StaticResource PageSubtitleStyle}"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="520"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="390" MinWidth="350" MaxWidth="520"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <DockPanel Grid.Row="0" Margin="0,0,0,12">
+                        <TextBlock Text="Список" Style="{StaticResource SectionTitleStyle}"/>
+                    </DockPanel>
+
+                    <DataGrid Grid.Row="1"
+                              ItemsSource="{Binding ProductOperations}"
+                              SelectedItem="{Binding SelectedProductOperation, Mode=TwoWay}"
+                              Style="{StaticResource ModernDataGridStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID"
+                                                Binding="{Binding Id}"
+                                                Width="70"
+                                                MinWidth="60"
+                                                ElementStyle="{StaticResource DataGridTextBlockStyle}"/>
+                            <DataGridTextColumn Header="Тип операции"
+                                                Binding="{Binding OperationType}"
+                                                Width="180"
+                                                MinWidth="140"
+                                                ElementStyle="{StaticResource DataGridTextBlockStyle}"/>
+                            <DataGridTextColumn Header="Дата"
+                                                Binding="{Binding OperationDate, StringFormat={}{0:dd.MM.yyyy}}"
+                                                Width="130"
+                                                MinWidth="100"
+                                                ElementStyle="{StaticResource DataGridTextBlockStyle}"/>
+                            <DataGridTextColumn Header="Материал"
+                                                Binding="{Binding Material.Name}"
+                                                Width="220"
+                                                MinWidth="160"
+                                                ElementStyle="{StaticResource DataGridTextBlockStyle}"/>
+                            <DataGridTextColumn Header="Вариант модели"
+                                                Binding="{Binding ModelVariant.DisplayName}"
+                                                Width="320"
+                                                MinWidth="230"
+                                                ElementStyle="{StaticResource DataGridTextBlockStyle}"/>
+                            <DataGridTextColumn Header="Количество"
+                                                Binding="{Binding Quantity}"
+                                                Width="130"
+                                                MinWidth="100"
+                                                ElementStyle="{StaticResource DataGridTextBlockStyle}"/>
+                            <DataGridTextColumn Header="Статус"
+                                                Binding="{Binding Status}"
+                                                Width="130"
+                                                MinWidth="100"
+                                                ElementStyle="{StaticResource DataGridTextBlockStyle}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+
+            <GridSplitter Grid.Column="1"
+                          Width="10"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          Background="Transparent"
+                          ShowsPreview="True"/>
+
+            <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Форма" Style="{StaticResource SectionTitleStyle}"/>
+
+                    <ScrollViewer Grid.Row="1"
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  Padding="0,0,8,0">
+                        <StackPanel>
+                            <TextBlock Text="Тип операции" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormOperationType, UpdateSourceTrigger=PropertyChanged}" MaxLength="100"
+                                     Style="{StaticResource AppTextBoxStyle}"/>
+
+                            <TextBlock Text="Дата операции" Style="{StaticResource FieldLabelStyle}"/>
+                            <DatePicker SelectedDate="{Binding FormOperationDate, Mode=TwoWay}"
+                                        Style="{StaticResource AppDatePickerStyle}"/>
+
+                            <TextBlock Text="Количество" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormQuantity, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource AppTextBoxStyle}"/>
+
+                            <TextBlock Text="Цена за единицу" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormUnitPrice, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource AppTextBoxStyle}"/>
+
+                            <TextBlock Text="Номер документа" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormDocumentNumber, UpdateSourceTrigger=PropertyChanged}" MaxLength="100"
+                                     Style="{StaticResource AppTextBoxStyle}"/>
+
+                            <TextBlock Text="Склад-отправитель" Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox ItemsSource="{Binding Warehouses}"
+                                      SelectedItem="{Binding SelectedSenderWarehouse, Mode=TwoWay}"
+                                      DisplayMemberPath="Name"
+                                      Style="{StaticResource AppComboBoxStyle}"/>
+
+                            <TextBlock Text="Склад-получатель" Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox ItemsSource="{Binding Warehouses}"
+                                      SelectedItem="{Binding SelectedReceiverWarehouse, Mode=TwoWay}"
+                                      DisplayMemberPath="Name"
+                                      Style="{StaticResource AppComboBoxStyle}"/>
+
+                            <TextBlock Text="Материал" Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox ItemsSource="{Binding Materials}"
+                                      SelectedItem="{Binding SelectedMaterial, Mode=TwoWay}"
+                                      DisplayMemberPath="Name"
+                                      Style="{StaticResource AppComboBoxStyle}"/>
+
+                            <TextBlock Text="Вариант модели" Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox ItemsSource="{Binding ModelVariants}"
+                                      SelectedItem="{Binding SelectedModelVariant, Mode=TwoWay}"
+                                      DisplayMemberPath="DisplayName"
+                                      Style="{StaticResource AppComboBoxStyle}"/>
+
+                            <TextBlock Text="Клиент" Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox ItemsSource="{Binding Clients}"
+                                      SelectedItem="{Binding SelectedClient, Mode=TwoWay}"
+                                      DisplayMemberPath="Name"
+                                      Style="{StaticResource AppComboBoxStyle}"/>
+
+                            <TextBlock Text="Ответственный" Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox ItemsSource="{Binding Employees}"
+                                      SelectedItem="{Binding SelectedResponsibleEmployee, Mode=TwoWay}"
+                                      DisplayMemberPath="DisplayName"
+                                      Style="{StaticResource AppComboBoxStyle}"/>
+
+                            <TextBlock Text="Получатель" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormRecipient, UpdateSourceTrigger=PropertyChanged}" MaxLength="200"
+                                     Style="{StaticResource AppTextBoxStyle}"/>
+
+                            <TextBlock Text="Адрес доставки" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormDeliveryAddress, UpdateSourceTrigger=PropertyChanged}" MaxLength="500" Height="70"
+                                     Style="{StaticResource AppMultilineTextBoxStyle}"/>
+
+                            <TextBlock Text="Маршрут" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormRoute, UpdateSourceTrigger=PropertyChanged}" MaxLength="500" Height="70"
+                                     Style="{StaticResource AppMultilineTextBoxStyle}"/>
+
+                            <TextBlock Text="Статус" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormStatus, UpdateSourceTrigger=PropertyChanged}" MaxLength="50"
+                                     Style="{StaticResource AppTextBoxStyle}"/>
+
+                            <TextBlock Text="Причина возврата" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormReturnReason, UpdateSourceTrigger=PropertyChanged}" MaxLength="500" Height="70"
+                                     Style="{StaticResource AppMultilineTextBoxStyle}"/>
+
+                            <TextBlock Text="Решение по возврату" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormReturnDecision, UpdateSourceTrigger=PropertyChanged}" MaxLength="500" Height="70"
+                                     Style="{StaticResource AppMultilineTextBoxStyle}"/>
+
+                            <WrapPanel Margin="0,10,0,0">
+                                <Button Content="Добавить"
+                                        Command="{Binding AddCommand}"
+                                        Style="{StaticResource PrimaryButtonStyle}"/>
+
+                                <Button Content="Изменить"
+                                        Command="{Binding UpdateCommand}"
+                                        Style="{StaticResource SecondaryButtonStyle}"/>
+
+                                <Button Content="Удалить"
+                                        Command="{Binding DeleteCommand}"
+                                        Style="{StaticResource DangerButtonStyle}"/>
+
+                                <Button Content="Очистить"
+                                        Command="{Binding ClearCommand}"
+                                        Style="{StaticResource SecondaryButtonStyle}"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="2" Style="{StaticResource StatusBorderStyle}">
+            <TextBlock Text="{Binding StatusMessage}"
+                       Foreground="{StaticResource TextBrush}"
+                       TextWrapping="Wrap"/>
+        </Border>
+    </Grid>
+</Page>

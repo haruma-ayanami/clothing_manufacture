@@ -1,0 +1,211 @@
+﻿<Page x:Class="clothing_manufacture.Views.ClothingModelsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Модели одежды"
+      Background="{StaticResource AppBackgroundBrush}">
+
+    <Page.Resources>
+        <ResourceDictionary Source="/Resources/AppStyles.xaml"/>
+    </Page.Resources>
+
+    <Grid Style="{StaticResource PageRootGridStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Style="{StaticResource HeaderCardStyle}">
+            <DockPanel LastChildFill="True">
+                <Button DockPanel.Dock="Right"
+                        Content="Обновить"
+                        Command="{Binding LoadCommand}"
+                        Style="{StaticResource GhostButtonStyle}"
+                        MinWidth="110"
+                        Margin="12,0,0,0"/>
+
+                <StackPanel>
+                    <TextBlock Text="Модели одежды" Style="{StaticResource PageTitleStyle}"/>
+                    <TextBlock Text="Основные модели изделий, категории, коллекции и ответственные сотрудники." Style="{StaticResource PageSubtitleStyle}"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="520"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="390" MinWidth="350" MaxWidth="520"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <DockPanel Grid.Row="0" Margin="0,0,0,12">
+                        <TextBlock Text="Список" Style="{StaticResource SectionTitleStyle}"/>
+                    </DockPanel>
+
+                    <DataGrid Grid.Row="1"
+                              ItemsSource="{Binding Models}"
+                              SelectedItem="{Binding SelectedModel, Mode=TwoWay}"
+                              Style="{StaticResource ModernDataGridStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID"
+                                                Binding="{Binding Id}"
+                                                Width="70"
+                                                MinWidth="60"
+                                                ElementStyle="{StaticResource DataGridTextBlockStyle}"/>
+                            <DataGridTextColumn Header="Артикул"
+                                                Binding="{Binding Article}"
+                                                Width="150"
+                                                MinWidth="120"
+                                                ElementStyle="{StaticResource DataGridTextBlockStyle}"/>
+                            <DataGridTextColumn Header="Наименование"
+                                                Binding="{Binding Name}"
+                                                Width="260"
+                                                MinWidth="190"
+                                                ElementStyle="{StaticResource DataGridTextBlockStyle}"/>
+                            <DataGridTextColumn Header="Категория"
+                                                Binding="{Binding CategoryClassifier.Value}"
+                                                Width="190"
+                                                MinWidth="140"
+                                                ElementStyle="{StaticResource DataGridTextBlockStyle}"/>
+                            <DataGridTextColumn Header="Коллекция"
+                                                Binding="{Binding Collection.Name}"
+                                                Width="190"
+                                                MinWidth="140"
+                                                ElementStyle="{StaticResource DataGridTextBlockStyle}"/>
+                            <DataGridTextColumn Header="Бренд"
+                                                Binding="{Binding Brand}"
+                                                Width="150"
+                                                MinWidth="120"
+                                                ElementStyle="{StaticResource DataGridTextBlockStyle}"/>
+                            <DataGridTextColumn Header="Статус"
+                                                Binding="{Binding Status}"
+                                                Width="130"
+                                                MinWidth="110"
+                                                ElementStyle="{StaticResource DataGridTextBlockStyle}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+
+            <GridSplitter Grid.Column="1"
+                          Width="10"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          Background="Transparent"
+                          ShowsPreview="True"/>
+
+            <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Форма" Style="{StaticResource SectionTitleStyle}"/>
+
+                    <ScrollViewer Grid.Row="1"
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  Padding="0,0,8,0">
+                        <StackPanel>
+                            <TextBlock Text="Артикул" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormArticle, UpdateSourceTrigger=PropertyChanged}" MaxLength="100"
+                                     Style="{StaticResource AppTextBoxStyle}"/>
+
+                            <TextBlock Text="Наименование" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormName, UpdateSourceTrigger=PropertyChanged}" MaxLength="200"
+                                     Style="{StaticResource AppTextBoxStyle}"/>
+
+                            <TextBlock Text="Категория" Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox ItemsSource="{Binding CategoryClassifiers}"
+                                      SelectedItem="{Binding SelectedCategoryClassifier, Mode=TwoWay}"
+                                      DisplayMemberPath="DisplayName"
+                                      Style="{StaticResource AppComboBoxStyle}"/>
+
+                            <TextBlock Text="Коллекция" Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox ItemsSource="{Binding Collections}"
+                                      SelectedItem="{Binding SelectedCollection, Mode=TwoWay}"
+                                      DisplayMemberPath="Name"
+                                      Style="{StaticResource AppComboBoxStyle}"/>
+
+                            <TextBlock Text="Дизайнер" Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox ItemsSource="{Binding Employees}"
+                                      SelectedItem="{Binding SelectedDesignerEmployee, Mode=TwoWay}"
+                                      DisplayMemberPath="DisplayName"
+                                      Style="{StaticResource AppComboBoxStyle}"/>
+
+                            <TextBlock Text="Конструктор" Style="{StaticResource FieldLabelStyle}"/>
+                            <ComboBox ItemsSource="{Binding Employees}"
+                                      SelectedItem="{Binding SelectedConstructorEmployee, Mode=TwoWay}"
+                                      DisplayMemberPath="DisplayName"
+                                      Style="{StaticResource AppComboBoxStyle}"/>
+
+                            <TextBlock Text="Бренд" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormBrand, UpdateSourceTrigger=PropertyChanged}" MaxLength="150"
+                                     Style="{StaticResource AppTextBoxStyle}"/>
+
+                            <TextBlock Text="Логотип" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormLogo, UpdateSourceTrigger=PropertyChanged}" MaxLength="250"
+                                     Style="{StaticResource AppTextBoxStyle}"/>
+
+                            <TextBlock Text="Фирменный цвет" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormBrandColor, UpdateSourceTrigger=PropertyChanged}" MaxLength="100"
+                                     Style="{StaticResource AppTextBoxStyle}"/>
+
+                            <TextBlock Text="Способ брендирования" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormBrandingMethod, UpdateSourceTrigger=PropertyChanged}" MaxLength="100"
+                                     Style="{StaticResource AppTextBoxStyle}"/>
+
+                            <TextBlock Text="Статус" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormStatus, UpdateSourceTrigger=PropertyChanged}" MaxLength="50"
+                                     Style="{StaticResource AppTextBoxStyle}"/>
+
+                            <TextBlock Text="Описание" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormDescription, UpdateSourceTrigger=PropertyChanged}" MaxLength="1000" Height="90"
+                                     Style="{StaticResource AppMultilineTextBoxStyle}"/>
+
+                            <TextBlock Text="Технологическая карта" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormTechnologicalCard, UpdateSourceTrigger=PropertyChanged}" MaxLength="1000" Height="90"
+                                     Style="{StaticResource AppMultilineTextBoxStyle}"/>
+
+                            <TextBlock Text="Требования брендбука" Style="{StaticResource FieldLabelStyle}"/>
+                            <TextBox Text="{Binding FormBrandbookRequirements, UpdateSourceTrigger=PropertyChanged}" MaxLength="1000" Height="90"
+                                     Style="{StaticResource AppMultilineTextBoxStyle}"/>
+
+                            <WrapPanel Margin="0,10,0,0">
+                                <Button Content="Добавить"
+                                        Command="{Binding AddCommand}"
+                                        Style="{StaticResource PrimaryButtonStyle}"/>
+
+                                <Button Content="Изменить"
+                                        Command="{Binding UpdateCommand}"
+                                        Style="{StaticResource SecondaryButtonStyle}"/>
+
+                                <Button Content="Удалить"
+                                        Command="{Binding DeleteCommand}"
+                                        Style="{StaticResource DangerButtonStyle}"/>
+
+                                <Button Content="Очистить"
+                                        Command="{Binding ClearCommand}"
+                                        Style="{StaticResource SecondaryButtonStyle}"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="2" Style="{StaticResource StatusBorderStyle}">
+            <TextBlock Text="{Binding StatusMessage}"
+                       Foreground="{StaticResource TextBrush}"
+                       TextWrapping="Wrap"/>
+        </Border>
+    </Grid>
+</Page>
